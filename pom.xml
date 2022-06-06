@@ -12,7 +12,7 @@
 	<artifactId>pnca-music</artifactId>
 	<version>0.0.1</version>
 	<name>pnca-music</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Music project for Spring Boot</description>
 	<properties>
 		<java.version>8</java.version>
 	</properties>
