@@ -34,6 +34,7 @@ public class UserRepositoryTest {
 		user.setLastLoginTime(new Date());
 
 		User save = repository.save(user);
-		System.out.println(save);
+		User pncalbl = repository.getByUsername("pncalbl");
+		System.out.println(pncalbl);
 	}
 }
