@@ -2,6 +2,8 @@ server:
   port: ${APPLICATION_PORT}
 
 spring:
+  profiles:
+    active: dev
   application:
     name: PncaMusic
   datasource:
@@ -9,5 +11,10 @@ spring:
     password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${MYSQL_HOST}:3306/${DATABASE_NAME}?characterEncoding=UTF8&userSSL=false
-
+  config:
+    import: optional:file:.env[.yml]
+  jpa:
+    generate-ddl: false
+  flyway:
+    enabled: true
 
