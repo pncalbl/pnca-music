@@ -1,6 +1,5 @@
 package com.pncalbl.pncamusic.entity;
 
-import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,7 +17,6 @@ import java.util.Date;
  **/
 
 @MappedSuperclass
-@Data
 public abstract class BaseEntity {
 	@Id
 	@GeneratedValue(generator = "ksuid")
@@ -30,4 +28,28 @@ public abstract class BaseEntity {
 
 	@UpdateTimestamp
 	private Date updatedTime;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Date getUpdatedTime() {
+		return updatedTime;
+	}
+
+	public void setUpdatedTime(Date updatedTime) {
+		this.updatedTime = updatedTime;
+	}
 }

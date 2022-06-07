@@ -1,7 +1,6 @@
 package com.pncalbl.pncamusic.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
 
 import javax.persistence.Entity;
 
@@ -12,11 +11,25 @@ import javax.persistence.Entity;
  * @description 角色实体类
  **/
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
 public class Role extends BaseEntity {
 	private String name;
 
 	private String title;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

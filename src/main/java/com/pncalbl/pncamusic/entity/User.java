@@ -1,8 +1,7 @@
 package com.pncalbl.pncamusic.entity;
 
 import com.pncalbl.pncamusic.enums.Gender;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,9 +15,7 @@ import java.util.List;
  **/
 
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
 public class User extends BaseEntity {
 
 	@Column(unique = true)
@@ -42,4 +39,76 @@ public class User extends BaseEntity {
 	private String lastLoginIp;
 
 	private Date lastLoginTime;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getLastLoginIp() {
+		return lastLoginIp;
+	}
+
+	public void setLastLoginIp(String lastLoginIp) {
+		this.lastLoginIp = lastLoginIp;
+	}
+
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
 }

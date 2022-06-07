@@ -35,6 +35,6 @@ public class UserRepositoryTest {
 
 		User save = repository.save(user);
 		User pncalbl = repository.getByUsername("pncalbl");
-		System.out.println(pncalbl);
+		System.out.println(pncalbl.getId());
 	}
 }
