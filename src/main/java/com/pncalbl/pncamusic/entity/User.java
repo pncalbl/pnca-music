@@ -2,11 +2,11 @@ package com.pncalbl.pncamusic.entity;
 
 import com.pncalbl.pncamusic.enums.Gender;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author pncalbl
@@ -16,6 +16,7 @@ import java.util.Date;
  **/
 
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 public class User extends BaseEntity {
@@ -26,6 +27,10 @@ public class User extends BaseEntity {
 	private String nickname;
 
 	private String password;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private List<Role> roles;
 
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
