@@ -1,2 +1,5 @@
-server:
-  port: 8080
+spring:
+  config:
+    import: optional:file:.env[.yml]
+  jpa:
+    show-sql: true
