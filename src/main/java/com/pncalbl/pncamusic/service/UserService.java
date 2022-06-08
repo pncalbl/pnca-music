@@ -1,5 +1,6 @@
 package com.pncalbl.pncamusic.service;
 
+import com.pncalbl.pncamusic.dto.UserCreateRequest;
 import com.pncalbl.pncamusic.dto.UserDto;
 
 import java.util.List;
@@ -13,4 +14,6 @@ import java.util.List;
 
 public interface UserService {
 	List<UserDto> list();
+
+	UserDto create(UserCreateRequest userCreateRequest);
 }

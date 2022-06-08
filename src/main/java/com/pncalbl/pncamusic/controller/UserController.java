@@ -1,12 +1,11 @@
 package com.pncalbl.pncamusic.controller;
 
+import com.pncalbl.pncamusic.dto.UserCreateRequest;
 import com.pncalbl.pncamusic.mapper.UserMapper;
 import com.pncalbl.pncamusic.service.UserService;
 import com.pncalbl.pncamusic.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +29,11 @@ public class UserController {
 		return userService.list().stream()
 				.map(userMapper::toVo)
 				.collect(Collectors.toList());
+	}
+
+	@PostMapping("/")
+	UserVo create(@RequestBody UserCreateRequest userCreateRequest) {
+		return userMapper.toVo(userService.create(userCreateRequest));
 	}
 
 	@Autowired
