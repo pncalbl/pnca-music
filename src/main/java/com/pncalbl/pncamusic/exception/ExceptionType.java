@@ -1,4 +1,4 @@
-package com.pncalbl.pncamusic.enums;
+package com.pncalbl.pncamusic.exception;
 
 /**
  * @author pncalbl
@@ -12,7 +12,8 @@ public enum ExceptionType {
 	BAD_REQUEST(400, "请求错误"),
 	UNAUTHORIZED(401, "未登录"),
 	FORBIDDEN(403, "无权操作"),
-	USER_NAME_DUPLICATE(40001001, "用户名重复");
+	USER_NAME_DUPLICATE(40001001, "用户名重复"),
+	USER_NOT_FOUND(40401002, "用户不存在");
 
 	private final Integer code;
 	private final String message;

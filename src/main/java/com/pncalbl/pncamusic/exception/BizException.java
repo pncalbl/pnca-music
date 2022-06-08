@@ -1,7 +1,5 @@
 package com.pncalbl.pncamusic.exception;
 
-import com.pncalbl.pncamusic.enums.ExceptionType;
-
 /**
  * @author pncalbl
  * @date 2022/6/8 21:14

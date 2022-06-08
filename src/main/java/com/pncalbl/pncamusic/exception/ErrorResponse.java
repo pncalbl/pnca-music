@@ -1,4 +1,4 @@
-package com.pncalbl.pncamusic.enums;
+package com.pncalbl.pncamusic.exception;
 
 /**
  * @author pncalbl

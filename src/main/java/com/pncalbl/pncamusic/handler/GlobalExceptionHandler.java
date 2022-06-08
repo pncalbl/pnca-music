@@ -1,7 +1,7 @@
 package com.pncalbl.pncamusic.handler;
 
-import com.pncalbl.pncamusic.enums.ErrorResponse;
-import com.pncalbl.pncamusic.enums.ExceptionType;
+import com.pncalbl.pncamusic.exception.ErrorResponse;
+import com.pncalbl.pncamusic.exception.ExceptionType;
 import com.pncalbl.pncamusic.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
