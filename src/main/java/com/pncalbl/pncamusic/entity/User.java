@@ -1,9 +1,14 @@
 package com.pncalbl.pncamusic.entity;
 
 import com.pncalbl.pncamusic.enums.Gender;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +21,7 @@ import java.util.List;
 
 
 @Entity
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
 
 	@Column(unique = true)
 	private String username;
@@ -44,6 +49,26 @@ public class User extends BaseEntity {
 		return username;
 	}
 
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return !getLocked();
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return getEnabled();
+	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -54,6 +79,15 @@ public class User extends BaseEntity {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		for (Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
+		}
+		return authorities;
 	}
 
 	public String getPassword() {

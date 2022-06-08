@@ -3,12 +3,13 @@ package com.pncalbl.pncamusic.service.impl;
 import com.pncalbl.pncamusic.dto.UserCreateRequest;
 import com.pncalbl.pncamusic.dto.UserDto;
 import com.pncalbl.pncamusic.entity.User;
-import com.pncalbl.pncamusic.enums.ExceptionType;
+import com.pncalbl.pncamusic.exception.ExceptionType;
 import com.pncalbl.pncamusic.exception.BizException;
 import com.pncalbl.pncamusic.mapper.UserMapper;
 import com.pncalbl.pncamusic.repository.UserRepository;
 import com.pncalbl.pncamusic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -66,5 +67,14 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
+	}
+
+	@Override
+	public User loadUserByUsername(String username) throws UsernameNotFoundException {
+		Optional<User> user = userRepository.findByUsername(username);
+		if (!user.isPresent()) {
+			throw new BizException(ExceptionType.USER_NOT_FOUND);
+		}
+		return user.get();
 	}
 }

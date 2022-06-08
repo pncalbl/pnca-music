@@ -2,6 +2,7 @@ package com.pncalbl.pncamusic.service;
 
 import com.pncalbl.pncamusic.dto.UserCreateRequest;
 import com.pncalbl.pncamusic.dto.UserDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @description
  **/
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 	List<UserDto> list();
 
 	UserDto create(UserCreateRequest userCreateRequest);
