@@ -1,5 +1,8 @@
 package com.pncalbl.pncamusic.dto;
 
+import com.pncalbl.pncamusic.enums.Gender;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +20,16 @@ public class UserDto {
 	private String nickname;
 
 	private List<RoleDto> roles;
+
+	private Gender gender;
+
+	private Boolean locked;
+
+	private Boolean enabled;
+
+	private String lastLoginIp;
+
+	private Date lastLoginTime;
 
 
 	public String getId() {
@@ -49,5 +62,45 @@ public class UserDto {
 
 	public void setRoles(List<RoleDto> roles) {
 		this.roles = roles;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getLastLoginIp() {
+		return lastLoginIp;
+	}
+
+	public void setLastLoginIp(String lastLoginIp) {
+		this.lastLoginIp = lastLoginIp;
+	}
+
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
 	}
 }

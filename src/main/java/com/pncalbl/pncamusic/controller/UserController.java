@@ -5,6 +5,7 @@ import com.pncalbl.pncamusic.mapper.UserMapper;
 import com.pncalbl.pncamusic.service.UserService;
 import com.pncalbl.pncamusic.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class UserController {
 	}
 
 	@PostMapping("/")
-	UserVo create(@RequestBody UserCreateRequest userCreateRequest) {
+	UserVo create(@Validated @RequestBody UserCreateRequest userCreateRequest) {
 		return userMapper.toVo(userService.create(userCreateRequest));
 	}
 
