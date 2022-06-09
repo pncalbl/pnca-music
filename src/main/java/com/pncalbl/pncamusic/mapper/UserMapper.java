@@ -2,10 +2,11 @@ package com.pncalbl.pncamusic.mapper;
 
 import com.pncalbl.pncamusic.dto.UserCreateRequest;
 import com.pncalbl.pncamusic.dto.UserDto;
+import com.pncalbl.pncamusic.dto.UserUpdateRequest;
 import com.pncalbl.pncamusic.entity.User;
 import com.pncalbl.pncamusic.vo.UserVo;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 
 /**
@@ -22,5 +23,7 @@ public interface UserMapper {
 	UserVo toVo(UserDto userDto);
 
 	User createEntity(UserCreateRequest userCreateRequest);
+
+	User updateEntity(@MappingTarget User user, UserUpdateRequest userUpdateRequest);
 }
 
