@@ -19,7 +19,6 @@ public class UserVo {
 
 	private List<RoleVo> roles;
 
-
 	public String getId() {
 		return id;
 	}
