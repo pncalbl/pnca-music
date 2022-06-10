@@ -1,5 +1,9 @@
 package com.pncalbl.pncamusic.service.impl;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.pncalbl.pncamusic.config.SecurityConfig;
+import com.pncalbl.pncamusic.dto.TokenCreateRequest;
 import com.pncalbl.pncamusic.dto.UserCreateRequest;
 import com.pncalbl.pncamusic.dto.UserDto;
 import com.pncalbl.pncamusic.dto.UserUpdateRequest;
@@ -12,10 +16,14 @@ import com.pncalbl.pncamusic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -66,6 +74,35 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Page<UserDto> search(Pageable pageable) {
 		return userRepository.findAll(pageable).map(userMapper::toDto);
+	}
+
+	@Override
+	public String createToken(TokenCreateRequest tokenCreateRequest) {
+		User user = loadUserByUsername(tokenCreateRequest.getUsername());
+		if (!passwordEncoder.matches(tokenCreateRequest.getPassword(), user.getPassword())) {
+			throw new BizException(ExceptionType.USER_PASSWORD_NOT_MATCH);
+		}
+		if (!user.isEnabled()) {
+			throw new BizException(ExceptionType.USER_NOT_ENABLED);
+		}
+
+		if (!user.isAccountNonLocked()) {
+			throw new BizException(ExceptionType.USER_LOCKED);
+		}
+		String token = JWT.create()
+				.withSubject(user.getUsername())
+				.withExpiresAt(new Date(System.currentTimeMillis() + SecurityConfig.EXPIRATION_TIME))
+				.sign(Algorithm.HMAC512(SecurityConfig.SECRET.getBytes(StandardCharsets.UTF_8)));
+
+		return SecurityConfig.TOKEN_PREFIX + token;
+	}
+
+	@Override
+	public UserDto getCurrentUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		// todo
+		return userMapper.toDto(loadUserByUsername(authentication.getName()));
 	}
 
 	private void checkUsername(String username) {
