@@ -1,7 +1,6 @@
 package com.pncalbl.pncamusic.config;
 
 import com.pncalbl.pncamusic.exception.RestAuthenticationEntryPoint;
-import com.pncalbl.pncamusic.filter.JwtAuthenticationFilter;
 import com.pncalbl.pncamusic.filter.JwtAuthorizationFilter;
 import com.pncalbl.pncamusic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public static final long EXPIRATION_TIME = 864000000; // 10 days
 	public static final String TOKEN_PREFIX = "Bearer ";
 	public static final String HEADER_STRING = "Authorization";
+	public static final String CREATE_TOKEN_URL = "/tokens/**";
 
 	UserService userService;
 	RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -35,9 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
 				.authorizeRequests()
+				.antMatchers(CREATE_TOKEN_URL).permitAll()
 				.anyRequest().authenticated()
 				.and()
-				.addFilter(new JwtAuthenticationFilter(authenticationManager()))
 				.addFilter(new JwtAuthorizationFilter(authenticationManager()))
 				.exceptionHandling()
 				.authenticationEntryPoint(restAuthenticationEntryPoint)

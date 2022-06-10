@@ -1,5 +1,7 @@
 package com.pncalbl.pncamusic.vo;
 
+import com.pncalbl.pncamusic.enums.Gender;
+
 import java.util.List;
 
 /**
@@ -16,6 +18,12 @@ public class UserVo {
 	private String username;
 
 	private String nickname;
+
+	private Gender gender;
+
+	private Boolean locked;
+
+	private Boolean enabled;
 
 	private List<RoleVo> roles;
 
@@ -49,5 +57,29 @@ public class UserVo {
 
 	public void setRoles(List<RoleVo> roles) {
 		this.roles = roles;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 }

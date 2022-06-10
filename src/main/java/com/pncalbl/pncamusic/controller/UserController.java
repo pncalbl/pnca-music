@@ -59,6 +59,10 @@ public class UserController {
 		userService.delete(id);
 	}
 
+	@GetMapping("/me")
+	UserVo me() {
+		return userMapper.toVo(userService.getCurrentUser());
+	}
 
 	@Autowired
 	public void setUserService(UserService userService) {
