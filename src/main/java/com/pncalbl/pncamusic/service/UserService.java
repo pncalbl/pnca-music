@@ -1,5 +1,6 @@
 package com.pncalbl.pncamusic.service;
 
+import com.pncalbl.pncamusic.dto.TokenCreateRequest;
 import com.pncalbl.pncamusic.dto.UserCreateRequest;
 import com.pncalbl.pncamusic.dto.UserDto;
 import com.pncalbl.pncamusic.dto.UserUpdateRequest;
@@ -25,4 +26,9 @@ public interface UserService extends UserDetailsService {
 	void delete(String id);
 
 	Page<UserDto> search(Pageable pageable);
+
+	String createToken(TokenCreateRequest tokenCreateRequest);
+
+	UserDto getCurrentUser();
+
 }

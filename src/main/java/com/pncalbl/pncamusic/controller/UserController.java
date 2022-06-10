@@ -5,6 +5,8 @@ import com.pncalbl.pncamusic.dto.UserUpdateRequest;
 import com.pncalbl.pncamusic.mapper.UserMapper;
 import com.pncalbl.pncamusic.service.UserService;
 import com.pncalbl.pncamusic.vo.UserVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,12 +25,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @CrossOrigin
+@Api(tags = "用户")
 public class UserController {
 
 	UserService userService;
 	UserMapper userMapper;
 
 	@GetMapping
+	@ApiOperation("用户检索")
 	Page<UserVo> search(@PageableDefault(sort = {"createdTime"}, direction = Sort.Direction.ASC) Pageable pageable) {
 		return userService.search(pageable).map(userMapper::toVo);
 	}
@@ -55,6 +59,10 @@ public class UserController {
 		userService.delete(id);
 	}
 
+	@GetMapping("/me")
+	UserVo me() {
+		return userMapper.toVo(userService.getCurrentUser());
+	}
 
 	@Autowired
 	public void setUserService(UserService userService) {
