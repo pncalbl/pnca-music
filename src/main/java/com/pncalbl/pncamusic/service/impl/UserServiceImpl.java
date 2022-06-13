@@ -99,10 +99,22 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getCurrentUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return userMapper.toDto(getCurrentUserEntity());
+	}
 
+	private User getCurrentUserEntity() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		// todo
-		return userMapper.toDto(loadUserByUsername(authentication.getName()));
+		return loadUserByUsername(authentication.getName());
+	}
+
+	@Override
+	public User loadUserByUsername(String username) {
+		Optional<User> user = userRepository.findByUsername(username);
+		if (!user.isPresent()) {
+			throw new BizException(ExceptionType.USER_NOT_FOUND);
+		}
+		return user.get();
 	}
 
 	private void checkUsername(String username) {
@@ -125,14 +137,5 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
-	}
-
-	@Override
-	public User loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> user = userRepository.findByUsername(username);
-		if (!user.isPresent()) {
-			throw new BizException(ExceptionType.USER_NOT_FOUND);
-		}
-		return user.get();
 	}
 }
