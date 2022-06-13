@@ -3,10 +3,11 @@ package com.pncalbl.pncamusic.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.pncalbl.pncamusic.config.SecurityConfig;
+import com.pncalbl.pncamusic.entity.User;
+import com.pncalbl.pncamusic.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 /**
  * @author pncalbl
@@ -26,9 +26,13 @@ import java.util.ArrayList;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-	public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
+	public JwtAuthorizationFilter(AuthenticationManager authenticationManager,
+	                              UserService userService) {
 		super(authenticationManager);
+		this.userService = userService;
 	}
+
+	UserService userService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -52,7 +56,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 					.getSubject();
 
 			if (username != null) {
-				return new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
+				User user = userService.loadUserByUsername(username);
+				return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
 			}
 		}
 		return null;
