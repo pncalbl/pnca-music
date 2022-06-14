@@ -7,4 +7,4 @@ spring:
 weixin:
   mp:
     app-id: ${MP_APP_ID}
-    app-secret: ${MP-APP-SECRET}
+    app-secret: ${MP_APP_SECRET}
