@@ -12,7 +12,7 @@ COPY src /app/src
 COPY pom.xml /app
 
 # 执行代码编译命令
-RUN mvn -f /app/pom.xml clean package -Dmaven.test.skip=true -Dspring.profiles.active=test
+RUN mvn -f /app/pom.xml clean package -Dmaven.test.skip=true -Dspring.profiles.active=dev
 
 # 选择运行时基础镜像
 FROM alpine:3.13
@@ -22,7 +22,8 @@ ENV MYSQL_USER_NAME music
 ENV MYSQL_PASSWORD dL83MJ:MTbp4eMg
 ENV DATABASE_NAME pnca-music
 ENV APPLICATION_PORT 8080
-
+ENV MP_APP_ID=wxad89febd08a945e8
+ENV MP_APP_SECRET=a835a21bb867fad6bbf7f5095fcfa9ca
 # 安装依赖包，如需其他依赖包，请到alpine依赖包管理(https://pkgs.alpinelinux.org/packages?name=php8*imagick*&branch=v3.13)查找。
 RUN apk add --update --no-cache openjdk8-jre-base \
     && rm -f /var/cache/apk/*
@@ -37,4 +38,4 @@ COPY --from=build /app/target/pnca-music-0.0.1.jar .
 EXPOSE 80
 
 # 执行启动命令
-CMD ["java", "-jar", "/app/pnca-music-0.0.1.jar", "--spring.profiles.active=test"]
+CMD ["java", "-jar", "/app/pnca-music-0.0.1.jar", "--spring.profiles.active=dev"]
