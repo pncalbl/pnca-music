@@ -8,3 +8,9 @@ weixin:
   mp:
     app-id: ${MP_APP_ID}
     app-secret: ${MP_APP_SECRET}
+
+cos:
+  bucket: yuanliyinyue-1256878828
+  secret-id: AKIDrYz93h5D4f04rUqvjGYZJlyuaz80bw0p
+  secret-key: YppZ2E99yYtyoOimbDagYAWcS3PVLwIO
+  region: ap-shanghai

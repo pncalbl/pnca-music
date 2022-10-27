@@ -17,7 +17,7 @@ import java.util.Optional;
  * @description
  **/
 
-public class BaseService {
+public abstract class BaseService {
 	protected UserRepository userRepository;
 
 	protected User getCurrentUserEntity() {

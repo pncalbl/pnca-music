@@ -103,6 +103,19 @@
 			<artifactId>weixin-java-mp</artifactId>
 			<version>4.3.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.qcloud</groupId>
+			<artifactId>cos-sts_api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.qcloud</groupId>
+			<artifactId>cos_api</artifactId>
+			<version>5.6.68</version>
+		</dependency>
+	
 	</dependencies>
 	
 	<build>
