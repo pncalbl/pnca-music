@@ -1,16 +1,16 @@
 package com.pncalbl.pncamusic.controller;
 
+import com.pncalbl.pncamusic.dto.FileDto;
 import com.pncalbl.pncamusic.dto.FileUploadRequest;
+import com.pncalbl.pncamusic.mapper.FileMapper;
 import com.pncalbl.pncamusic.mapper.FileUploadMapper;
 import com.pncalbl.pncamusic.service.FileService;
 import com.pncalbl.pncamusic.vo.FileUploadVo;
+import com.pncalbl.pncamusic.vo.FileVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -29,9 +29,16 @@ public class FileController {
 
 	private FileUploadMapper fileUploadMapper;
 
+	private FileMapper fileMapper;
+
 	@PostMapping("/upload_init")
 	public FileUploadVo initUpload(@Validated @RequestBody FileUploadRequest fileUploadRequest) throws IOException {
 		return fileUploadMapper.toVo(fileService.initUpload(fileUploadRequest));
+	}
+
+	@PostMapping("/{id}/upload_finish")
+	public FileVo finishUpload(@PathVariable String id) {
+		return fileMapper.toVo(fileService.finishUpload(id));
 	}
 
 	@Autowired
@@ -43,5 +50,10 @@ public class FileController {
 	@Autowired
 	public void setFileUploadMapper(FileUploadMapper fileUploadMapper) {
 		this.fileUploadMapper = fileUploadMapper;
+	}
+
+	@Autowired
+	public void setFileMapper(FileMapper fileMapper) {
+		this.fileMapper = fileMapper;
 	}
 }

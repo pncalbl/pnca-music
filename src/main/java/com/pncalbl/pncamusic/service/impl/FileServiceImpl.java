@@ -1,9 +1,13 @@
 package com.pncalbl.pncamusic.service.impl;
 
+import com.pncalbl.pncamusic.dto.FileDto;
 import com.pncalbl.pncamusic.dto.FileUploadDto;
 import com.pncalbl.pncamusic.dto.FileUploadRequest;
 import com.pncalbl.pncamusic.entity.File;
+import com.pncalbl.pncamusic.enums.FileStatus;
 import com.pncalbl.pncamusic.enums.Storage;
+import com.pncalbl.pncamusic.exception.BizException;
+import com.pncalbl.pncamusic.exception.ExceptionType;
 import com.pncalbl.pncamusic.mapper.FileMapper;
 import com.pncalbl.pncamusic.repository.FileRepository;
 import com.pncalbl.pncamusic.service.FileService;
@@ -15,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author pncalbl
@@ -43,15 +49,39 @@ public class FileServiceImpl extends BaseService implements FileService {
 		file.setCreatedBy(getCurrentUserEntity());
 		file.setUpdatedBy(getCurrentUserEntity());
 		File saveFile = repository.save(file);
+		// 通过接口获取 STS 令牌
 		FileUploadDto fileUploadDto = storageServices.get(getDefaultStorage().name()).initFileUpload();
-
 		fileUploadDto.setKey(saveFile.getKey());
 		fileUploadDto.setFileId(saveFile.getId());
 		return fileUploadDto;
 	}
 
-	private Storage getDefaultStorage() {
+	@Override
+	public FileDto finishUpload(String id) {
+		File file = getFileEntity(id);
+		// Todo: 是否是SUPER_ADMIN
+		if (!Objects.equals(file.getCreatedBy().getId(), getCurrentUserEntity().getId())) {
+			throw new BizException(ExceptionType.FILE_NOT_PERMISSION);
+		}
+
+		// Todo: 验证远程文件是否存在
+
+		file.setFileStatus(FileStatus.UPLOADED);
+		return mapper.toDto(repository.save(file));
+	}
+
+	@Override
+	public Storage getDefaultStorage() {
 		return Storage.COS;
+	}
+
+	@Override
+	public File getFileEntity(String id) {
+		Optional<File> fileOptional = repository.findById(id);
+		if (!fileOptional.isPresent()) {
+			throw new BizException(ExceptionType.FILE_NOT_FOUND);
+		}
+		return fileOptional.get();
 	}
 
 
