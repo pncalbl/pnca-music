@@ -9,13 +9,13 @@ import java.util.List;
 
 /**
  * @author pncalbl
- * @date 2022/10/30 20:48
+ * @date 2022/11/1 21:35
  * @e-mail pncalbl@qq.com
  * @description
  **/
 
 @Entity
-public class PlayList extends TraceableBaseEntity {
+public class Playlist extends TraceableBaseEntity {
 	private String name;
 
 	private String description;
@@ -24,6 +24,7 @@ public class PlayList extends TraceableBaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	private PlayListStatus status = PlayListStatus.DRAFT;
+
 
 	@ManyToMany
 	@JoinTable(name = "playlist_music", joinColumns =
@@ -37,14 +38,6 @@ public class PlayList extends TraceableBaseEntity {
 	private Integer recommendFactor = 0;
 
 	private Boolean special = false;
-
-	public List<Music> getMusicList() {
-		return musicList;
-	}
-
-	public void setMusicList(List<Music> musicList) {
-		this.musicList = musicList;
-	}
 
 	public String getName() {
 		return name;
@@ -78,6 +71,14 @@ public class PlayList extends TraceableBaseEntity {
 		this.status = status;
 	}
 
+	public List<Music> getMusicList() {
+		return musicList;
+	}
+
+	public void setMusicList(List<Music> musicList) {
+		this.musicList = musicList;
+	}
+
 	public Boolean getRecommended() {
 		return recommended;
 	}
@@ -102,3 +103,4 @@ public class PlayList extends TraceableBaseEntity {
 		this.special = special;
 	}
 }
+

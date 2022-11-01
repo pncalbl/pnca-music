@@ -4,6 +4,7 @@ import com.pncalbl.pncamusic.core.dto.FileDto;
 import com.pncalbl.pncamusic.core.dto.FileUploadRequest;
 import com.pncalbl.pncamusic.core.entity.File;
 import com.pncalbl.pncamusic.core.vo.FileVo;
+import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 
 /**
@@ -14,6 +15,7 @@ import org.mapstruct.Mapper;
  **/
 
 @Mapper(componentModel = "spring")
+@DecoratedWith(FileMapperDecorator.class)
 public interface FileMapper {
 	File createEntity(FileUploadRequest fileUploadRequest);
 

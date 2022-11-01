@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
  **/
 
 @MappedSuperclass
-public class TraceableBaseEntity extends BaseEntity {
+public abstract class TraceableBaseEntity extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "create_by_user_id")
