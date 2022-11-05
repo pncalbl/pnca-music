@@ -1,11 +1,11 @@
 package com.pncalbl.pncamusic.music.entity;
 
 import com.pncalbl.pncamusic.core.entity.BaseEntity;
+import com.pncalbl.pncamusic.core.entity.File;
 import com.pncalbl.pncamusic.music.enums.MusicStatus;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author pncalbl
@@ -23,6 +23,28 @@ public class Music extends BaseEntity {
 
 	private String description;
 
+	@ManyToMany
+	@JoinTable(name = "artist_music", joinColumns = @JoinColumn(name = "music_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
+	private List<Artist> artistList;
+
+	@OneToOne
+	private File file;
+
+	public List<Artist> getArtistList() {
+		return artistList;
+	}
+
+	public void setArtistList(List<Artist> artistList) {
+		this.artistList = artistList;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
 
 	public String getName() {
 		return name;

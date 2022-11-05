@@ -2,15 +2,22 @@ package com.pncalbl.pncamusic.music.service.impl;
 
 import com.pncalbl.pncamusic.core.enums.ExceptionType;
 import com.pncalbl.pncamusic.core.mapper.MapperInterface;
+import com.pncalbl.pncamusic.core.repository.specs.SearchCriteria;
+import com.pncalbl.pncamusic.core.repository.specs.SearchOperation;
 import com.pncalbl.pncamusic.core.service.impl.GeneralServiceImpl;
 import com.pncalbl.pncamusic.music.dto.MusicDto;
+import com.pncalbl.pncamusic.music.dto.MusicSearchFilter;
 import com.pncalbl.pncamusic.music.dto.MusicUpdateRequest;
 import com.pncalbl.pncamusic.music.entity.Music;
 import com.pncalbl.pncamusic.music.enums.MusicStatus;
 import com.pncalbl.pncamusic.music.mapper.MusicMapper;
 import com.pncalbl.pncamusic.music.repository.MusicRepository;
+import com.pncalbl.pncamusic.music.repository.specs.MusicSpecification;
 import com.pncalbl.pncamusic.music.service.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +63,18 @@ public class MusicServiceImpl extends GeneralServiceImpl<Music, MusicDto> implem
 	@Override
 	public List<MusicDto> list() {
 		return repository.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
+	}
+
+	@Override
+	public Page<MusicDto> search(MusicSearchFilter musicSearchFilter) {
+		if (musicSearchFilter == null) {
+			musicSearchFilter = new MusicSearchFilter();
+		}
+		MusicSpecification specs = new MusicSpecification();
+		specs.add(new SearchCriteria("name", musicSearchFilter.getName(), SearchOperation.MATCH));
+		Sort sort = Sort.by(Sort.Direction.DESC, "createdTime");
+		PageRequest pageable = PageRequest.of(musicSearchFilter.getPage() - 1, musicSearchFilter.getSize(), sort);
+		return repository.findAll(specs, pageable).map(mapper::toDto);
 	}
 
 	@Autowired

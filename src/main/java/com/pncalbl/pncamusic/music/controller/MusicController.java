@@ -1,11 +1,13 @@
 package com.pncalbl.pncamusic.music.controller;
 
 import com.pncalbl.pncamusic.music.dto.MusicCreateRequest;
+import com.pncalbl.pncamusic.music.dto.MusicSearchFilter;
 import com.pncalbl.pncamusic.music.dto.MusicUpdateRequest;
 import com.pncalbl.pncamusic.music.mapper.MusicMapper;
 import com.pncalbl.pncamusic.music.service.MusicService;
 import com.pncalbl.pncamusic.music.vo.MusicVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +35,13 @@ public class MusicController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public List<MusicVo> list() {
 		return musicService.list().stream().map(musicMapper::toVo).collect(Collectors.toList());
+	}
+
+	// Todo: post请求; 参数问题
+	@PostMapping("/search")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public Page<MusicVo> search(@RequestBody(required = false) MusicSearchFilter searchFilter) {
+		return musicService.search(searchFilter).map(musicMapper::toVo);
 	}
 
 

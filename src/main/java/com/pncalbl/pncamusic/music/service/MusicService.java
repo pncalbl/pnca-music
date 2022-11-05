@@ -2,8 +2,10 @@ package com.pncalbl.pncamusic.music.service;
 
 import com.pncalbl.pncamusic.core.service.GeneralService;
 import com.pncalbl.pncamusic.music.dto.MusicDto;
+import com.pncalbl.pncamusic.music.dto.MusicSearchFilter;
 import com.pncalbl.pncamusic.music.dto.MusicUpdateRequest;
 import com.pncalbl.pncamusic.music.entity.Music;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -22,4 +24,6 @@ public interface MusicService extends GeneralService<Music, MusicDto> {
 	MusicDto update(String id, MusicUpdateRequest musicUpdateRequest);
 
 	List<MusicDto> list();
+
+	Page<MusicDto> search(MusicSearchFilter musicSearchFilter);
 }

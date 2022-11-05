@@ -2,41 +2,22 @@ package com.pncalbl.pncamusic.music.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * @author pncalbl
- * @date 2022/10/25 14:39
+ * @date 2022/11/5 21:05
  * @e-mail pncalbl@qq.com
  * @description
  **/
 
-public class MusicCreateRequest {
-	@NotBlank(message = "歌曲名不能为空")
+public class PlaylistCreateRequest {
+	@NotBlank(message = "歌单名不能为空")
 	private String name;
 
 	private String description;
 
-	private String fileId;
-
-	@NotNull(message = "歌手未选择")
-	private List<String> artistIds;
-
-	public String getFileId() {
-		return fileId;
-	}
-
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
-	}
-
-	public List<String> getArtistIds() {
-		return artistIds;
-	}
-
-	public void setArtistIds(List<String> artistIds) {
-		this.artistIds = artistIds;
-	}
+	@NotNull(message = "请上传封面")
+	private String coverId;
 
 	public String getName() {
 		return name;
@@ -52,5 +33,13 @@ public class MusicCreateRequest {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getCoverId() {
+		return coverId;
+	}
+
+	public void setCoverId(String coverId) {
+		this.coverId = coverId;
 	}
 }

@@ -1,6 +1,8 @@
 package com.pncalbl.pncamusic.music.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * @author pncalbl
@@ -14,6 +16,27 @@ public class MusicUpdateRequest {
 	private String name;
 
 	private String description;
+
+	private String fileId;
+
+	@NotEmpty(message = "歌手未选择")
+	private List<String> artistIds;
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+
+	public List<String> getArtistIds() {
+		return artistIds;
+	}
+
+	public void setArtistIds(List<String> artistIds) {
+		this.artistIds = artistIds;
+	}
 
 	public String getName() {
 		return name;
