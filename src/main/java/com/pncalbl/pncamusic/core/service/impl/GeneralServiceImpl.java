@@ -4,6 +4,7 @@ import com.pncalbl.pncamusic.core.dto.BaseDto;
 import com.pncalbl.pncamusic.core.entity.BaseEntity;
 import com.pncalbl.pncamusic.core.exception.BizException;
 import com.pncalbl.pncamusic.core.service.GeneralService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -36,14 +37,14 @@ public abstract class GeneralServiceImpl<Entity extends BaseEntity, Dto extends 
 		return optionalEntity.get();
 	}
 
-	// @Override
-	// @Transactional
-	// public Dto update(String id, Dto dto) {
-	// 	// Todo: dto 可能无法控制更新字段
-	// 	Entity existedEntity = getEntity(id);
-	// 	Entity updatedEntity = getRepository().save(getMapper().updateEntity(existedEntity, dto));
-	// 	return getMapper().toDto(updatedEntity);
-	// }
+	@Override
+	@Transactional
+	public Dto update(String id, Dto dto) {
+		// Todo: dto 可能无法控制更新字段
+		Entity existedEntity = getEntity(id);
+		Entity updatedEntity = getRepository().save(getMapper().updateEntity(existedEntity, dto));
+		return getMapper().toDto(updatedEntity);
+	}
 
 	@Override
 	public void delete(String id) {

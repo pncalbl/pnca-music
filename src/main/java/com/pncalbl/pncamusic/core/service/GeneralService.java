@@ -23,7 +23,7 @@ public interface GeneralService<Entity extends BaseEntity, Dto extends BaseDto> 
 
 	Dto get(String id);
 
-	// Dto update(String id, Dto dto);
+	Dto update(String id, Dto dto);
 
 	void delete(String id);
 }

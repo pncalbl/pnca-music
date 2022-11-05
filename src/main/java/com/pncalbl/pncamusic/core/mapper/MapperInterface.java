@@ -2,6 +2,7 @@ package com.pncalbl.pncamusic.core.mapper;
 
 import com.pncalbl.pncamusic.core.dto.BaseDto;
 import com.pncalbl.pncamusic.core.entity.BaseEntity;
+import org.mapstruct.MappingTarget;
 
 /**
  * @author pncalbl
@@ -15,5 +16,5 @@ public interface MapperInterface<Entity extends BaseEntity, Dto extends BaseDto>
 
 	Entity toEntity(Dto dto);
 
-	// Entity updateEntity(@MappingTarget Entity entity, Dto dto);
+	Entity updateEntity(@MappingTarget Entity entity, Dto dto);
 }
