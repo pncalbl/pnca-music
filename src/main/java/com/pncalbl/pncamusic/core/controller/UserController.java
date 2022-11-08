@@ -1,6 +1,7 @@
 package com.pncalbl.pncamusic.core.controller;
 
 import com.pncalbl.pncamusic.core.dto.UserCreateRequest;
+import com.pncalbl.pncamusic.core.dto.UserSearchFilter;
 import com.pncalbl.pncamusic.core.dto.UserUpdateRequest;
 import com.pncalbl.pncamusic.core.mapper.UserMapper;
 import com.pncalbl.pncamusic.core.service.UserService;
@@ -35,8 +36,8 @@ public class UserController {
 	@GetMapping
 	@ApiOperation("用户检索")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	Page<UserVo> search(@PageableDefault(sort = {"createdTime"}, direction = Sort.Direction.ASC) Pageable pageable) {
-		return userService.search(pageable).map(userMapper::toVo);
+	Page<UserVo> search(@Validated UserSearchFilter userSearchFilter) {
+		return userService.search(userSearchFilter).map(userMapper::toVo);
 	}
 
 	@PostMapping

@@ -1,9 +1,6 @@
 package com.pncalbl.pncamusic.core.service;
 
-import com.pncalbl.pncamusic.core.dto.TokenCreateRequest;
-import com.pncalbl.pncamusic.core.dto.UserCreateRequest;
-import com.pncalbl.pncamusic.core.dto.UserDto;
-import com.pncalbl.pncamusic.core.dto.UserUpdateRequest;
+import com.pncalbl.pncamusic.core.dto.*;
 import com.pncalbl.pncamusic.core.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +26,7 @@ public interface UserService extends UserDetailsService {
 
 	void delete(String id);
 
-	Page<UserDto> search(Pageable pageable);
+	Page<UserDto> search(UserSearchFilter userSearchFilter);
 
 	String createToken(TokenCreateRequest tokenCreateRequest);
 

@@ -3,19 +3,18 @@ package com.pncalbl.pncamusic.core.service.impl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.pncalbl.pncamusic.core.config.SecurityConfig;
-import com.pncalbl.pncamusic.core.dto.TokenCreateRequest;
-import com.pncalbl.pncamusic.core.dto.UserCreateRequest;
-import com.pncalbl.pncamusic.core.dto.UserDto;
-import com.pncalbl.pncamusic.core.dto.UserUpdateRequest;
+import com.pncalbl.pncamusic.core.dto.*;
 import com.pncalbl.pncamusic.core.entity.User;
 import com.pncalbl.pncamusic.core.exception.BizException;
 import com.pncalbl.pncamusic.core.enums.ExceptionType;
 import com.pncalbl.pncamusic.core.mapper.UserMapper;
 import com.pncalbl.pncamusic.core.repository.UserRepository;
+import com.pncalbl.pncamusic.core.repository.specs.SearchCriteria;
+import com.pncalbl.pncamusic.core.repository.specs.SearchOperation;
+import com.pncalbl.pncamusic.core.repository.specs.UserSpecification;
 import com.pncalbl.pncamusic.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,8 +70,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Page<UserDto> search(Pageable pageable) {
-		return userRepository.findAll(pageable).map(userMapper::toDto);
+	public Page<UserDto> search(UserSearchFilter userSearchFilter) {
+		UserSpecification specs = new UserSpecification();
+		specs.add(new SearchCriteria("nickname", userSearchFilter.getNickname(), SearchOperation.MATCH));
+		return userRepository.findAll(specs, userSearchFilter.toPageable()).map(userMapper::toDto);
 	}
 
 	@Override
